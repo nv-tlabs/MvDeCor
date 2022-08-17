@@ -1,1 +1,234 @@
-test
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<div class="topnav" id="myTopnav">
+  <a href="https://www.nvidia.com/"><img width="100%" src="assets/nvidia.svg"></a>
+  <a href="https://nv-tlabs.github.io/" ><strong>Toronto AI Lab</strong></a>
+</div>
+
+<!-- End : Google Analytics Code -->
+<script type="text/javascript" src="../js/hidebib.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic' rel='stylesheet' type='text/css'>
+<head>
+    <title>MvDeCor: Multi-view Dense Correspondence Learning for Fine-grained 3D Segmentation</title>
+    <meta property="og:description" content="Hierarchical Neural Implicit Pose Network for Animation and Motion Retargeting"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6HHDEXF452"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6HHDEXF452');
+</script>
+
+</head>
+
+
+ <body>
+<div class="container">
+    <div class="paper-title">
+      <h1>MvDeCor: Multi-view Dense Correspondence Learning for Fine-grained 3D Segmentation</h1>
+    </div>
+
+    
+    <div id="authors">
+        <div class="author-row">
+            <div class="col-5 text-center"><a href="https://hippogriff.github.io/">Gopal Sharma</a><sup>1</sup></div>
+            <div class="col-5 text-center"><a href="https://kangxue.org/">Kangxue Yin</a><sup>2</sup></div>
+            <div class="col-5 text-center"><a href="https://people.cs.umass.edu/~smaji/">Subhransu Maji</a><sup>1</sup></div>
+            <div class="col-5-30 text-center"><a href="https://people.cs.umass.edu/~kalo/">Evangelos Kalogerakis</a><sup>1</sup></div>
+            <div class="col-5 text-center"><a href="https://orlitany.github.io/">Or Litany</a><sup>2</sup></div>
+            <div class="col-5 text-center"><a href="https://www.cs.toronto.edu/~fidler/">Sanja Fidler</a><sup>2,3,4</sup></div>
+        </div>
+
+        <div class="affil-row">
+            <div class="col-4 text-center"><sup>1</sup>UMass Amherst</a></div>
+            <div class="col-4 text-center"><sup>2</sup>NVIDIA</a></div>
+            <div class="col-4 text-center"><sup>3</sup>University of Toronto</div>
+            <div class="col-4 text-center"><sup>4</sup>Vector Institute</div>
+        </div>
+
+        <div style="clear: both">
+            <div class="paper-btn-parent">
+            <a class="supp-btn" href="">
+                <span class="material-icons"> description </span>
+                 Paper
+            </a>
+            <a class="supp-btn" href="assets/bib.txt">
+                <span class="material-icons"> description </span>
+                  BibTeX
+            </a>
+            <a class="supp-btn" href="">
+                <span class="material-icons"> description </span>
+                  Code            </a>
+        </div></div>
+    </div>
+
+    <br>   
+    <section id="teaser">
+        <a href="assets/teaser.png">
+            <img width="100%" src="assets/teaser.png">
+        </a>
+        <br>   
+        <p class="caption"><strong>The MvDeCor pipeline:</strong>
+(a) Dense 2D representations are learned using pixel-level correspondences guided by 3D shapes. 
+(b) The 2D representations can be fine-tuned using a few labels for 3D shape segmentation tasks in a multi-view setting.
+        </p>
+        <br>
+    </section>
+
+    <section id="abstract"/>
+        <h2>Abstract</h2>
+        <hr/>
+
+        <p>
+            We propose to utilize <strong>self-supervised</strong> techniques in the 2D domain for fine-grained 3D shape segmentation tasks. This is inspired by the observation that view-based surface representations are more effective at modeling high-resolution surface details and texture than their 3D counterparts based on point clouds or voxel occupancy. Specifically, given a 3D shape, we render it from multiple views, and set up a <strong>dense correspondence learning</strong> task within the <strong>contrastive learning</strong> framework. As a result, <strong>the learned 2D representations are view-invariant and geometrically consistent</strong>, leading to better generalization when trained on a limited number of labeled shapes compared to alternatives that utilize self-supervision in 2D or 3D alone. Experiments on textured (RenderPeople) and untextured (PartNet) 3D datasets show that our method outperforms state-of-the-art alternatives in fine-grained part segmentation. The improvements over baselines are greater when only a sparse set of views is available for training or when shapes are textured, indicating that MvDeCor benefits from both 2D processing and 3D geometric reasoning.
+            </p>
+    </section>
+
+    <section id="method">
+        <h2>Method</h2>
+        <hr/>
+        <figure style="width: 100%;">
+            <a href="assets/method.png">
+                <img width="100%" src="assets/method.png">
+            </a>
+            <p class="caption" style="margin-bottom: 1px;">
+                <strong>Top left:</strong> Our self-supervision approach takes two
+overlapping views (RGB image, with optional normal and depth maps) of a 3D shape
+and passes it through a network that produces per-pixel embeddings. We define a
+dense contrastive loss promoting similarity between matched pixels and minimizing
+similarity between un-matched pixels. <strong>Bottom left:</strong> Once the network is trained we add
+a segmentation head and fine-tune the entire architecture on a few labeled examples to
+predict per-pixel semantic labels. <strong>Right:</strong> Labels predicted by the 2D network for each
+view are back-projected to the 3D surface and aggregated using a voting scheme.
+
+            </p>
+        </figure>
+        
+
+        <section id="results"/>
+        <h2>Qualitative Results</h2>
+        <hr/>
+
+        <figure style="width: 100%;">    
+            <a href="assets/visualization.png">
+                <img width="100%" src="assets/visualization.png">
+            </a>
+            <p class="caption"><strong>Visualization of learned embeddings</strong>. Given a pair of images in (a) and
+(b), our network produces per-pixel embedding for each image. We map pixels from
+(b) to (a) according to feature similarity, resulting in (c). Similarly (d) is generated by
+transferring texture from (a) to (b). For pixels which have similarity below a threshold are colored red. We visualize the smoothness of our learned correspondence in the
+second and forth row. Our method learns to produce correct correspondences between
+human subject in different clothing and same human subject in different camera poses
+(left). Our approach also finds correct correspondences between different human subjects in different poses (right). Mistakes are highlighted using black boxes.
+<br><br>
+            </p>
+        </figure>
+
+
+
+        <figure style="width: 100%;">    
+            <a href="assets/segmentation.png">
+                <img width="100%" src="assets/segmentation.png">
+            </a>
+            <p class="caption"><strong>Visualization of predicted semantic labels</strong> on the Renderpeople
+dataset in the few-shot setting when k = 5 fully labeled shapes are used
+for fine-tuning. We visualize the predictions of all baselines. Our method produces
+accurate semantic labels for 3D shapes even for small parts, such as ears and eyebrows.
+            </p>
+        </figure>
+
+
+
+    </section>
+    
+    
+    <section id="Evaluation">
+        <h2>Evaluation</h2>
+        <hr/>
+        <figure style="width: 100%;">
+            <a href="assets/table.png">
+                <img width="100%" src="assets/table.png">
+            </a>
+            <p class="caption"><strong>Few-shot segmentation on the Partnet dataset with k=10 labeled
+shapes.</strong> 10 fully labeled shapes are provided for training. Evaluation is done on the
+test set of PartNet using the mean part-iou metric (%). Training is done per category
+separately. Results are reported by averaging over 5 random runs. 
+Note that evaluation on Chairs, Lamps and
+Tables categories is shown separately in the Table below with k = 30, because our randomly selected k = 10 shapes do not cover all the part labels of these classes. 
+<br><br>
+            </p>
+        </figure>
+
+
+        <figure style="width: 70%;" >
+            <a href="assets/table_chair.png" >
+                <img width="100%" src="assets/table_chair.png"  >
+            </a>
+        </figure>
+            <p class="caption"><strong>Few-shot segmentation on the PartNet dataset k=30 labeled
+shapes.</strong> Left: 30 fully labeled
+shapes are used for training. Right: 30 shapes are used for training, each containing
+v = 5 random labeled views. Evaluation is done on the test set of PartNet with the
+mean part-iou metric (%). Results are reported by averaging over 5 random runs.<br><br>
+            </p>
+
+        <figure style="width: 100%;">
+            <a href="assets/table_people.png">
+                <img width="100%" src="assets/table_people.png">
+            </a>
+            <p class="caption"><strong>Few-shot segmentation on the RenderPeople dataset.</strong> We evaluate
+the segmentation performance using the part mIOU metric. We experiment with two
+kinds of input, 1) when both RGB+Geom. (depth and normal maps) are input, and 2)
+when only RGB is input to the network. We evaluate all methods when k = 5, 10 fully
+labeled shapes are used for supervision and when k = 5, 10 shapes with 3 2D views are
+available for supervision. MvDeCor consistently outperform baselines on all settings.
+
+            </p>
+        </figure>
+
+        <br/>
+        
+    <section id="bibtex">
+        <h2>Citation</h2>
+        <hr/>
+        <pre><code>
+@inproceedings{MvDeCor2022,
+    title = {MvDeCor: Multi-view Dense Correspondence Learning for Fine-grained 3D Segmentation}, 
+    author = {Gopal Sharma and Kangxue Yin and Subhransu Maji and Evangelos Kalogerakis and Or Litany and Sanja Fidler},        
+    booktitle = {ECCV},
+    year = {2022}
+}
+
+</code></pre>
+    </section>
+
+    <section id="paper">
+        <h2>Paper</h2>
+        <hr>
+        <div class="flex-row">
+            <div style="box-sizing: border-box; padding: 16px; margin: auto;">
+                <a href="assets/mvdecor.pdf"><img class="screenshot" src="assets/preview.png"></a>
+            </div>
+            <div style="width: 50%">
+                <p><b>MvDeCor: Multi-view Dense Correspondence Learning for Fine-grained 3D Segmentation</b></p>
+                <p>Gopal Sharma, Kangxue Yin, Subhransu Maji, Evangelos Kalogerakis, Or Litany, Sanja Fidler</p>
+
+                <div><span class="material-icons"> description </span><a href="assets/auvnet-paper.pdf"> PDF</a></div>
+                <div><span class="material-icons"> description </span><a href=""> arXiv version</a></div>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

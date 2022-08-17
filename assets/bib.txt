@@ -1,0 +1,6 @@
+@inproceedings{MvDeCor2022,
+    title = {MvDeCor: Multi-view Dense Correspondence Learning for Fine-grained 3D Segmentation}, 
+    author = {Gopal Sharma and Kangxue Yin and Subhransu Maji and Evangelos Kalogerakis and Or Litany and Sanja Fidler},        
+    booktitle = {ECCV},
+    year = {2022}
+}
